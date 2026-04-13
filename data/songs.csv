@@ -1,11 +1,21 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,liveness,instrumentalness,mood_tags
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,78,2020,0.08,0.02,uplifting|summer|carefree
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,65,2020,0.05,0.85,focused|calm|rainy
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,72,2010,0.18,0.10,aggressive|driving|powerful
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,58,2020,0.04,0.90,peaceful|rainy|focused
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,85,2020,0.06,0.03,motivational|workout|upbeat
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,42,2010,0.03,0.95,dreamy|meditative|cosmic
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,55,2000,0.35,0.62,cozy|nostalgic|mellow
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,70,2010,0.07,0.45,nostalgic|cinematic|night
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,62,2020,0.04,0.88,focused|productive|calm
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,74,2020,0.12,0.05,romantic|breezy|summer
+11,Desert Caravan,Nomad Atlas,world fusion,adventurous,0.63,104,0.52,0.67,0.41,48,2010,0.28,0.42,adventurous|exotic|wanderlust
+12,Silver Strings,Aria Nocturne,classical,serene,0.18,62,0.74,0.22,0.96,38,2000,0.22,0.98,elegant|peaceful|serene
+13,Voltage Bloom,Iron Orchid,metal,aggressive,0.95,168,0.32,0.55,0.05,68,2010,0.25,0.15,aggressive|powerful|raw
+14,Ocean Lanterns,Blue Tide Ensemble,folk,nostalgic,0.44,92,0.66,0.48,0.83,50,2000,0.30,0.40,nostalgic|sentimental|acoustic
+15,Midnight Mirage,DJ Solara,edm,euphoric,0.88,128,0.79,0.91,0.12,88,2020,0.08,0.12,euphoric|danceable|night
+16,Crimson Alley,Delta Howl,blues,melancholic,0.51,88,0.38,0.47,0.72,52,1990,0.42,0.20,melancholic|soulful|raw
+17,Island Ember,Roots Collective,reggae,laid-back,0.57,76,0.69,0.74,0.65,60,2010,0.38,0.25,laid-back|sunny|positive
+18,Paper Skies,Featherlight,indie folk,hopeful,0.36,84,0.77,0.53,0.89,55,2020,0.15,0.30,hopeful|tender|acoustic
+19,Neon Pulse Drift,Chrome District,experimental,moody,0.71,116,0.41,0.63,0.28,45,2020,0.10,0.55,moody|abstract|urban
+20,Starfall Overture,Orion's Echo,cinematic,epic,0.72,140,0.54,0.37,0.49,66,2010,0.20,0.75,epic|dramatic|soaring
