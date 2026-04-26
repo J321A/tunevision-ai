@@ -1,23 +1,47 @@
 """
-Music Recommender Simulation — CLI runner
+Music Recommender System — CLI runner and chat interface launcher
 
 Run from the project root:
-    python3 src/main.py
-Or from inside src/:
-    python3 main.py
+    python3 src/main.py                    # Original CLI demo
+    python3 src/main.py --chat            # Launch chat interface
+    python3 src/main.py --rag-demo        # Demo RAG recommendations
 """
 
 import os
 import sys
 import textwrap
+import argparse
+import logging
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Ensure src/ is on the path regardless of invocation style
+import os
+import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from recommender import (
     load_songs, recommend_songs, apply_diversity_penalty,
     compute_max_score, SCORING_MODES, DEFAULT_WEIGHTS,
 )
+from chat_interface import launch_chat_interface
+from rag_engine import MusicRAGEngine
+from vector_store import create_music_vector_store
+from knowledge_base import create_default_knowledge_base
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('tunevision.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _DATA_PATH = os.path.join(_HERE, "..", "data", "songs.csv")
@@ -153,7 +177,8 @@ PROFILES = {
 }
 
 
-def main() -> None:
+def run_original_demo() -> None:
+    """Run the original CLI demonstration."""
     songs = load_songs(_DATA_PATH)
     print(f"Loaded songs: {len(songs)}")
 
@@ -179,6 +204,95 @@ def main() -> None:
     focus_prefs = PROFILES["Deep Focus Study"]
     run_profile("Deep Focus  [no diversity]",  focus_prefs, songs, mode="balanced", diversity=False)
     run_profile("Deep Focus  [diversity on]",   focus_prefs, songs, mode="balanced", diversity=True)
+
+
+def run_rag_demo() -> None:
+    """Demonstrate the RAG recommendation system."""
+    try:
+        print("🎵 TuneVision AI - RAG Demo")
+        print("=" * 50)
+        logger.info("Starting RAG demo")
+
+        # Load components
+        logger.info("Loading music data")
+        songs = load_songs(_DATA_PATH)
+        print(f"Loaded {len(songs)} songs")
+
+        logger.info("Creating vector store")
+        vector_store = create_music_vector_store(songs, cache_path="data/vector_store.pkl")
+        knowledge_base = create_default_knowledge_base()
+        rag_engine = MusicRAGEngine(songs, vector_store, knowledge_base)
+
+        print("✅ System ready!")
+
+        # Demo queries
+        demo_queries = [
+            "I want some happy pop music for a sunny day",
+            "Looking for chill lofi beats to study to",
+            "Need intense rock songs for working out",
+            "Find me some moody synthwave for late night driving",
+            "I like acoustic jazz for relaxing",
+        ]
+
+        for query in demo_queries:
+            logger.info(f"Processing demo query: {query}")
+            print(f"\n🔍 Query: '{query}'")
+            recommendations = rag_engine.get_recommendations_with_explanations(query, k=3)
+
+            for i, rec in enumerate(recommendations, 1):
+                song = rec['song']
+                print(f"\n{i}. {song['title']} by {song['artist']}")
+                print(f"   Genre: {song['genre']} | Mood: {song['mood']} | Energy: {song['energy']:.1f}")
+                print(f"   Score: {rec['score']:.2f}")
+                print(f"   Why: {rec['detailed_explanation'][:150]}...")
+
+            print("-" * 50)
+
+        logger.info("RAG demo completed successfully")
+
+    except Exception as e:
+        logger.error(f"Error in RAG demo: {e}", exc_info=True)
+        print(f"Error running RAG demo: {e}")
+        raise
+
+
+def main() -> None:
+    try:
+        parser = argparse.ArgumentParser(description="TuneVision AI Music Recommender")
+        parser.add_argument("--chat", action="store_true", help="Launch interactive chat interface")
+        parser.add_argument("--rag-demo", action="store_true", help="Run RAG recommendation demo")
+        parser.add_argument("--api-key", help="OpenAI API key for chat features")
+
+        args = parser.parse_args()
+
+        logger.info("TuneVision AI starting up")
+
+        if args.chat:
+            # Launch chat interface
+            api_key = args.api_key or os.getenv("OPENAI_API_KEY", "")
+            if not api_key:
+                logger.warning("No OpenAI API key provided. Chat will have limited functionality.")
+                print("Warning: No OpenAI API key provided. Chat will have limited functionality.")
+                print("Set OPENAI_API_KEY environment variable or use --api-key option.")
+            else:
+                logger.info("Launching chat interface with API key")
+            launch_chat_interface(_DATA_PATH, api_key)
+
+        elif args.rag_demo:
+            logger.info("Running RAG demo")
+            run_rag_demo()
+
+        else:
+            # Run original CLI demo
+            logger.info("Running original CLI demo")
+            run_original_demo()
+
+        logger.info("TuneVision AI shutting down")
+
+    except Exception as e:
+        logger.error(f"Application error: {e}", exc_info=True)
+        print(f"Error: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

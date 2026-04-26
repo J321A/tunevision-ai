@@ -1,0 +1,33 @@
+flowchart TD
+    User([👤 User]) --> UI[🎯 User Interface<br/>CLI/Web Chat]
+    UI --> CA[🤖 Chat Agent<br/>Conversational Memory]
+    CA --> RAG[🧠 RAG Engine<br/>Hybrid Retrieval]
+    RAG --> VS[🔍 Vector Store<br/>Semantic Search<br/>FAISS + Embeddings]
+    RAG --> KB[📚 Knowledge Base<br/>Music Domain Facts<br/>Genre/Mood Context]
+    RAG --> TR[📊 Traditional Recommender<br/>Hybrid Scoring<br/>Content-based Filtering]
+    VS --> LLM[💬 LLM Generation<br/>OpenAI GPT<br/>Contextual Responses]
+    KB --> LLM
+    TR --> LLM
+    RAG --> PG[🎵 Playlist Generator<br/>Mood-based Playlists<br/>Energy Flow]
+    RAG --> TA[📈 Taste Analyzer<br/>User Preferences<br/>Profile Analysis]
+    LLM --> Response[💭 Personalized Response<br/>With Explanations]
+    PG --> Response
+    TA --> Response
+    Response --> UI
+    Response --> Logs[(📝 System Logs<br/>Activity Tracking)]
+    Tester[🧪 Tester/Developer] --> Demo[🚀 Demo Scripts<br/>Feature Testing]
+    Demo --> CA
+    Demo --> Validation[✅ Validation<br/>Error Handling<br/>Fallbacks]
+    Songs[(🎼 Song Database<br/>CSV/Embeddings)] --> VS
+    Songs --> TR
+    Knowledge[(🧠 Music Knowledge<br/>Domain Facts)] --> KB
+    classDef inputClass fill:#e1f5fe
+    classDef processClass fill:#f3e5f5
+    classDef storageClass fill:#e8f5e8
+    classDef outputClass fill:#fff3e0
+    classDef testClass fill:#fce4ec
+    class User,UI inputClass
+    class CA,RAG,VS,KB,TR,LLM,PG,TA processClass
+    class Songs,Knowledge,Logs storageClass
+    class Response outputClass
+    class Tester,Demo,Validation testClass
