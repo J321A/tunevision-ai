@@ -1,12 +1,25 @@
 # 🎵 TuneVision AI
 
-## Original Project Background
+## Project Goals
 
-This project began as the original Modules 1-3 music recommender: a lightweight Python system that scored songs by genre, mood, energy, and acoustic attributes. Its original goals were to help users discover tracks from a static catalog, explain why a recommendation matched their mood, and provide a foundation for more advanced music discovery features.
+**TuneVision AI** transforms a basic music recommender into a comprehensive AI-powered system that combines traditional recommendation algorithms with modern machine learning techniques. The project demonstrates how to build production-ready AI systems that are:
 
-## Title and Summary
+- **Conversational:** Users can ask for music in natural language
+- **Explainable:** Every recommendation comes with detailed reasoning
+- **Hybrid:** Combines rule-based scoring with semantic vector search
+- **Modular:** Clean architecture supporting easy extensions
+- **Reproducible:** Well-documented setup and comprehensive testing
 
-**TuneVision AI** is an interactive music recommendation system that blends traditional music recommender logic with modern AI. It matters because it turns song metadata into meaningful discovery: users can ask for music in natural language, receive curated recommendations, and get explanations powered by retrieval-augmented generation.
+## New Features (Beyond Original Recommender)
+
+- **🤖 AI Chat Interface:** Conversational music recommendations powered by OpenAI GPT
+- **🔍 Vector Search:** Semantic similarity search using Sentence Transformers and FAISS
+- **📚 RAG Architecture:** Retrieval-Augmented Generation combining knowledge base with LLM responses
+- **🎯 Hybrid Scoring:** Traditional recommender logic enhanced with vector similarity
+- **📊 Taste Analysis:** User preference tracking and personalized insights
+- **🎵 Playlist Generation:** Mood-based playlist creation
+- **🌐 Web Interface:** Gradio-based chat UI with real-time interactions
+- **📈 Comprehensive Testing:** Unit tests, integration tests, and performance validation
 
 ## Architecture Overview
 
@@ -33,70 +46,138 @@ For a visual version, see `assets/system_architecture.mmd`.
 ### Prerequisites
 
 - Python 3.8 or higher
-- OpenAI API key for chat features
+- OpenAI API key for chat features (optional - system works without it)
 
-### Install and Run
+### Quick Start
 
-```bash
-cd tunevision-ai
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env and add your OpenAI API key
-```
+1. **Clone and navigate to the project:**
+   ```bash
+   cd tunevision-ai
+   ```
+
+2. **Create a virtual environment:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up environment variables:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your OpenAI API key (optional)
+   ```
+
+5. **Run the system:**
+   ```bash
+   # Basic CLI demo
+   python src/main.py
+
+   # Interactive chat interface
+   python src/main.py --chat
+
+   # Run tests
+   python -m pytest tests/
+   ```
 
 ### Run Modes
 
-- CLI demo:
-  ```bash
-  python src/main.py
-  ```
-- RAG demo:
-  ```bash
-  python src/main.py --rag-demo
-  ```
-- Interactive chat:
-  ```bash
-  python src/main.py --chat
-  ```
-  (Note: The chat interface will automatically find an available port starting from 7860)
-- Full feature demo:
-  ```bash
-  python demo.py
-  ```
+- **CLI demo** (`python src/main.py`):
+  Shows sample recommendations with different user profiles and scoring modes.
+
+- **RAG demo** (`python src/main.py --rag-demo`):
+  Demonstrates the retrieval-augmented generation system with natural language queries.
+
+- **Interactive chat** (`python src/main.py --chat`):
+  Launches a web-based chat interface for conversational music recommendations.
+
+- **Full feature demo** (`python demo.py`):
+  Runs comprehensive demonstrations of all system capabilities.
 
 ## Sample Interactions
 
-### Example 1
-**Input:** `I want some happy pop music for a sunny day`
+### CLI Mode Examples
 
-**Output:**
-- `Sunrise City by Neon Echo`
-- `Gym Hero by Max Pulse`
-- `Rooftop Lights by Indigo Parade`
+**Input Profile:** Happy pop music for a sunny day
+```
+════════════════════════════════════════════════════════════════════
+  2020 Pop Hits
+  Mode: BALANCED  |  Max score: 9.5
+  genre=pop | mood=happy | energy=0.8 | decade=2020 | tags=['uplifting', 'carefree']
+════════════════════════════════════════════════════════════════════
 
-**Explanation:** "This song scores 4.8 points because: genre match, energy, valence, and acoustic balance make it a strong happy pop fit."
+Top Recommendations:
+#1 Sunrise City by Neon Echo (pop, happy) - Score: 9.22/9.5
+   Genre match (+2.0) | Mood match (+1.0) | Energy (+1.96) | Valence (+0.96) | Acoustic (+0.82)
 
-### Example 2
-**Input:** `Find chill lofi beats to study to`
+#2 Gym Hero by Max Pulse (pop, intense) - Score: 7.12/9.5
+   Genre match (+2.0) | Energy (+1.74) | Valence (+0.97) | Acoustic (+0.95)
 
-**Output:**
-- `Midnight Coding by LoRoom`
-- `Crimson Alley by Delta Howl`
-- `Focus Flow by LoRoom`
+#3 Rooftop Lights by Indigo Parade (indie pop, happy) - Score: 6.00/9.5
+   Mood match (+1.0) | Energy (+1.92) | Valence (+0.99) | Acoustic (+0.65)
+```
 
-**Explanation:** "Lofi music typically features chill textures and steady energy that supports concentration."
+### Chat Interface Examples
 
-### Example 3
-**Input:** `Need intense rock songs for working out`
+**User Input:** "I want upbeat pop music for working out"
 
-**Output:**
-- `Storm Runner by Voltline`
-- `Gym Hero by Max Pulse`
-- `Desert Caravan by Nomad Atlas`
+**System Response:**
+```
+Based on your request for upbeat pop music for working out, here are some recommendations:
 
-**Explanation:** "These tracks are chosen because they match high energy, strong intensity, and dynamic momentum appropriate for workouts."
+**Recommended Songs:**
+1. **Sunrise City** by *Neon Echo*
+   - Genre: pop | Mood: happy | Energy: 0.82
+   - Why it fits: This energetic pop track with high valence and moderate acoustic elements would be perfect for a workout session.
+
+2. **Gym Hero** by *Max Pulse*
+   - Genre: pop | Mood: intense | Energy: 0.93
+   - Why it fits: High-energy pop music that matches your workout intensity preference.
+
+3. **Rooftop Lights** by *Indigo Parade*
+   - Genre: indie pop | Mood: happy | Energy: 0.76
+   - Why it fits: Upbeat indie pop with good energy levels for maintaining workout motivation.
+```
+
+**User Input:** "Find me some chill lofi beats to study to"
+
+**System Response:**
+```
+For chill lofi beats to study to, I've found these tracks that match your preferences:
+
+**Recommended Songs:**
+1. **Midnight Coding** by *LoRoom*
+   - Genre: lofi | Mood: chill | Energy: 0.42
+   - Why it fits: Perfect lofi chill vibes with moderate energy that won't distract from studying.
+
+2. **Library Rain** by *Paper Lanterns*
+   - Genre: lofi | Mood: chill | Energy: 0.35
+   - Why it fits: Very chill lofi with low energy, ideal for focused study sessions.
+
+3. **Focus Flow** by *LoRoom*
+   - Genre: lofi | Mood: focused | Energy: 0.40
+   - Why it fits: Lofi music designed for concentration and productivity.
+```
+
+### RAG Demo Examples
+
+**Natural Language Query:** "Need intense rock songs for driving"
+
+**System Analysis:**
+```
+Query parsed as: genre=rock, mood=intense, energy=high, context=driving
+Retrieving relevant songs from vector store...
+Applying hybrid scoring with domain knowledge...
+
+Top matches:
+1. Storm Runner by Voltline (rock, intense) - Score: 8.80
+2. Gym Hero by Max Pulse (pop, intense) - Score: 5.35
+3. Desert Caravan by Nomad Atlas (world fusion, adventurous) - Score: 5.18
+```
 
 ## Design Decisions
 
@@ -111,21 +192,39 @@ cp .env.example .env
 - The system uses a static catalog rather than live streaming metadata, which keeps it easier to inspect and test.
 - The OpenAI integration is powerful, but it also depends on API availability and key management.
 
-## Testing Summary
+## Testing
 
-- **What worked:**
-  - The full demo script runs end-to-end.
-  - `python src/main.py --rag-demo` now completes successfully.
-  - Vector-based retrieval, playlist generation, and taste analysis all produce results.
+### Automated Tests
 
-- **What needed attention:**
-  - Relative imports had to be converted to absolute imports for CLI execution.
-  - LangChain version compatibility required adjustments to memory and prompt handling.
+Run the test suite to verify system functionality:
 
-- **What I learned:**
-  - Small architecture changes can break execution paths, so consistent import structure matters.
-  - Logging and graceful error handling are essential for debugging AI pipelines.
-  - Explicit setup instructions make the repo easier for a future reviewer to run without guessing.
+```bash
+# Run all tests
+python -m pytest tests/
+
+# Run specific test file
+python -m pytest tests/test_recommender.py -v
+
+# Run tests with coverage
+python -m pytest tests/ --cov=src --cov-report=html
+```
+
+**Expected Results:**
+- `2/2 tests pass` for the recommender unit tests
+- All core functionality (scoring, recommendations, explanations) validated
+
+### Manual Testing
+
+1. **CLI Mode:** Run `python src/main.py` and verify sample profiles produce reasonable recommendations
+2. **Chat Interface:** Run `python src/main.py --chat` and test natural language queries
+3. **RAG Demo:** Run `python src/main.py --rag-demo` and verify vector search + recommendations work
+4. **Full Demo:** Run `python demo.py` for comprehensive feature demonstration
+
+### Performance Validation
+
+- **Response Time:** Chat queries should respond within 5-10 seconds
+- **Accuracy:** Top recommendations should match user preferences (genre, mood, energy)
+- **Robustness:** System should handle edge cases gracefully (empty queries, invalid preferences)
 
 ## Reliability and Evaluation
 
@@ -152,12 +251,38 @@ I was surprised by how import path issues could break the entire system despite 
 ### Collaboration with AI
 Throughout this project, I collaborated extensively with AI tools like GitHub Copilot for code suggestions and debugging. One helpful instance was when Copilot suggested the correct Mermaid syntax for the system architecture diagram, saving me time on formatting. However, it once suggested using deprecated LangChain memory classes, which led to import errors that required manual fixes—reminding me to always verify AI-generated code against current documentation.
 
----
+## Troubleshooting
 
-## Additional Notes
+### Common Issues
 
-- The repository is intended for portfolio review and demonstration rather than large-scale deployment.
-- The design supports future extensions such as collaborative filtering, Spotify integration, and richer conversational memory.
-- See `model_card.md` for more detail on capabilities and limitations.
+**"Module not found" errors:**
+```bash
+# Ensure you're in the virtual environment
+source .venv/bin/activate
+# Reinstall dependencies
+pip install -r requirements.txt
+```
 
-**Built with:** Python, Sentence Transformers, FAISS, LangChain, Gradio, OpenAI
+**Chat interface won't start:**
+```bash
+# Kill any existing processes on port 7860
+lsof -ti:7860 | xargs kill -9
+# Try again
+python src/main.py --chat
+```
+
+**OpenAI API errors:**
+- Check your API key in `.env` file
+- Verify your OpenAI account has credits
+- The system works without API key (limited chat features)
+
+**Import errors:**
+- Ensure you're running from the project root directory
+- Check that all files are in `src/` directory
+- Try: `PYTHONPATH=src python src/main.py`
+
+### Performance Tips
+
+- First run may be slow due to model downloads
+- Chat responses take 5-10 seconds with API calls
+- System works offline for basic recommendations

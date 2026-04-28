@@ -86,15 +86,14 @@ def create_chat_interface(songs: List[Dict], openai_api_key: str = ""):
         return summary_text
 
     # Create Gradio interface
-    with gr.Blocks(title="TuneVision AI - Music Recommendation Chat", theme=gr.themes.Soft()) as interface:
+    with gr.Blocks(title="TuneVision AI - Music Recommendation Chat") as interface:
 
         gr.Markdown("# 🎵 TuneVision AI")
         gr.Markdown("Chat with an AI music recommender! Tell me about your mood, favorite genres, or what you're looking for.")
 
         chatbot = gr.Chatbot(
             height=400,
-            label="Chat",
-            type="messages"
+            label="Chat"
         )
 
         with gr.Row():
@@ -141,7 +140,8 @@ def launch_chat_interface(data_path: str = "data/songs.csv", openai_api_key: str
         server_name="0.0.0.0",
         server_port=None,  # Let Gradio find an available port
         share=False,
-        show_error=False  # Don't show connection errors
+        show_error=False,  # Don't show connection errors
+        theme=gr.themes.Soft()
     )
 
 
