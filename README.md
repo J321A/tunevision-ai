@@ -179,6 +179,13 @@ Top matches:
 3. Desert Caravan by Nomad Atlas (world fusion, adventurous) - Score: 5.18
 ```
 
+## Demo Walkthrough
+
+> A short video walkthrough of the system in action.
+
+[![Demo](assets/demo-thumbnail.png)](https://www.loom.com/share/1a914014972546af994d3654fb3a6254)
+
+
 ## Design Decisions
 
 - **Hybrid approach**: I kept the original recommender logic and added vector search so the system works both with rules and semantic similarity.
